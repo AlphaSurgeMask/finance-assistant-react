@@ -1,24 +1,21 @@
-import uuid from 'react-native-uuid';
-
-import { useState } from 'react';
+import { useState } from "react";
+import { Link, Stack } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { TextInput, StyleSheet, Pressable } from "react-native";
+import { TextInput, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ExternalLink } from "@/components/external-link";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 
 export default function HomeScreen() {
-  let currnetUUID = uuid.v4();
-
   const theme = useTheme();
-  const [text, onChangeText] = useState('Input your bank statement here...');
+  const [text, onChangeText] = useState("Input your bank statement here...");
 
   return (
     <ThemedView style={styles.container}>
+      <Stack.Screen options={{ title: "Home" }} />
       <SafeAreaView style={styles.safeArea}>
         <ThemedView style={styles.heroSection}>
           <ThemedText type="title" style={styles.centerText}>
@@ -34,31 +31,31 @@ export default function HomeScreen() {
             editable
             multiline
             numberOfLines={15}
-            onChangeText={text => onChangeText(text)}
+            onChangeText={(text) => onChangeText(text)}
             placeholder={text}
             style={styles.textInput}
           />
         </ThemedView>
         <ThemedView style={styles.heroSection}>
-          <ExternalLink href="/analysis" asChild>
-            <Pressable style={({ pressed }) => pressed && styles.pressed}>
-              <ThemedView type="backgroundElement" style={styles.linkButton}>
-                <ThemedText type="link">Begin analysis</ThemedText>
-                <SymbolView
-                  tintColor={theme.text}
-                  name={{
-                    ios: "dollarsign.circle",
-                    android: "paid",
-                    web: "paid",
-                  }}
-                  size={14}
-                />
-              </ThemedView>
-            </Pressable>
-          </ExternalLink>
-          <ThemedText style={styles.centerText} themeColor="textSecondary">
-            Current user identifer: {currnetUUID}
-          </ThemedText>
+          <ThemedView type="backgroundElement" style={styles.linkButton}>
+            <Link
+              href={{
+                pathname: "/analysis",
+                params: { add: 86 },
+              }}
+            >
+              <ThemedText type="link">Begin analysis</ThemedText>
+              <SymbolView
+                tintColor={theme.text}
+                name={{
+                  ios: "dollarsign.circle",
+                  android: "paid",
+                  web: "paid",
+                }}
+                size={14}
+              />
+            </Link>
+          </ThemedView>
         </ThemedView>
       </SafeAreaView>
     </ThemedView>
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     padding: 10,
-    borderColor: '#000000',
+    borderColor: "#000000",
     borderWidth: 1.5,
     borderRadius: Spacing.two,
     margin: 12,
