@@ -1,5 +1,8 @@
+import uuid from 'react-native-uuid';
+
+import { useState } from 'react';
 import { SymbolView } from "expo-symbols";
-import { StyleSheet, Pressable } from "react-native";
+import { TextInput, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ExternalLink } from "@/components/external-link";
@@ -9,7 +12,10 @@ import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 
 export default function HomeScreen() {
+  let currnetUUID = uuid.v4();
+
   const theme = useTheme();
+  const [text, onChangeText] = useState('Input your bank statement here...');
 
   return (
     <ThemedView style={styles.container}>
@@ -22,7 +28,18 @@ export default function HomeScreen() {
             Lets help you cut down your spending{"\n"}and prune some
             subscriptions.
           </ThemedText>
-
+        </ThemedView>
+        <ThemedView type="backgroundElement" style={styles.stepContainer}>
+          <TextInput
+            editable
+            multiline
+            numberOfLines={15}
+            onChangeText={text => onChangeText(text)}
+            placeholder={text}
+            style={styles.textInput}
+          />
+        </ThemedView>
+        <ThemedView style={styles.heroSection}>
           <ExternalLink href="/analysis" asChild>
             <Pressable style={({ pressed }) => pressed && styles.pressed}>
               <ThemedView type="backgroundElement" style={styles.linkButton}>
@@ -39,6 +56,9 @@ export default function HomeScreen() {
               </ThemedView>
             </Pressable>
           </ExternalLink>
+          <ThemedText style={styles.centerText} themeColor="textSecondary">
+            Current user identifer: {currnetUUID}
+          </ThemedText>
         </ThemedView>
       </SafeAreaView>
     </ThemedView>
@@ -71,6 +91,13 @@ const styles = StyleSheet.create({
   },
   code: {
     textTransform: "uppercase",
+  },
+  textInput: {
+    padding: 10,
+    borderColor: '#000000',
+    borderWidth: 1.5,
+    borderRadius: Spacing.two,
+    margin: 12,
   },
   stepContainer: {
     gap: Spacing.three,
