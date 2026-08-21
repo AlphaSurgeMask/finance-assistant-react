@@ -2,11 +2,18 @@ import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { BarChart } from "react-native-chart-kit/v2";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
 export default function AnalysisScreen() {
+const demoData = [
+  { month: "Jan", Coles: 180, GymMembership: 60 },
+  { month: "Feb", Coles: 520, GymMembership: 210 },
+  { month: "Mar", Coles: 260, GymMembership: 120 }
+];
+
   return (
     <ThemedView style={styles.container}>
       <Stack.Screen options={{ title: "Analysis" }} />
@@ -16,8 +23,21 @@ export default function AnalysisScreen() {
             Finance Analysis
           </ThemedText>
           <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This is where we will take a {"\n"} deeper look at your financies.
+            This is where we will take a {"\n"} deeper look at your finances.
           </ThemedText>
+        </ThemedView>
+        <ThemedView type="backgroundElement" style={styles.stepContainer}>
+          <BarChart
+            data={demoData}
+            xKey="month"
+            mode="stacked"
+            series={[
+              { yKey: "Coles", label: "Coles" },
+              { yKey: "GymMembership", label: "Gym Membership" }
+            ]}
+            width={410}
+            height={260}
+          />
         </ThemedView>
       </SafeAreaView>
     </ThemedView>
@@ -44,6 +64,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: Spacing.four,
     gap: Spacing.four,
+  },
+  stepContainer: {
+    gap: Spacing.three,
+    alignSelf: "stretch",
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.four,
+    borderRadius: Spacing.four,
   },
   centerText: {
     textAlign: "center",
