@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -8,11 +8,12 @@ import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
 export default function AnalysisScreen() {
-const demoData = [
-  { month: "Jan", Coles: 180, GymMembership: 60 },
-  { month: "Feb", Coles: 520, GymMembership: 210 },
-  { month: "Mar", Coles: 260, GymMembership: 120 }
-];
+  const statement = useLocalSearchParams();
+  const demoData = [
+    { month: "Jan", Coles: 180, GymMembership: 60 },
+    { month: "Feb", Coles: 520, GymMembership: 210 },
+    { month: "Mar", Coles: 260, GymMembership: 120 },
+  ];
 
   return (
     <ThemedView style={styles.container}>
@@ -25,19 +26,19 @@ const demoData = [
           <ThemedText style={styles.centerText} themeColor="textSecondary">
             This is where we will take a {"\n"} deeper look at your finances.
           </ThemedText>
-        </ThemedView>
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <BarChart
-            data={demoData}
-            xKey="month"
-            mode="stacked"
-            series={[
-              { yKey: "Coles", label: "Coles" },
-              { yKey: "GymMembership", label: "Gym Membership" }
-            ]}
-            width={410}
-            height={260}
-          />
+          <ThemedView type="backgroundElement" style={styles.stepContainer}>
+            <BarChart
+              data={demoData}
+              xKey="month"
+              mode="stacked"
+              series={[
+                { yKey: "Coles", label: "Coles" },
+                { yKey: "GymMembership", label: "Gym Membership" },
+              ]}
+              width={MaxContentWidth}
+              height={480}
+            />
+          </ThemedView>
         </ThemedView>
       </SafeAreaView>
     </ThemedView>
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     gap: Spacing.three,
-    alignSelf: "stretch",
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.four,
     borderRadius: Spacing.four,

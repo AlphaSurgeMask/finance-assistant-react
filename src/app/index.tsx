@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { Link, Stack } from "expo-router";
-import { SymbolView } from "expo-symbols";
 import { TextInput, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
-import { useTheme } from "@/hooks/use-theme";
 
 export default function HomeScreen() {
-  const theme = useTheme();
-  const [text, onChangeText] = useState("Input your bank statement here...");
+  const [statement, onChangeText] = useState(
+    "Input your bank statement here...",
+  );
 
   return (
     <ThemedView style={styles.container}>
@@ -25,35 +24,24 @@ export default function HomeScreen() {
             Lets help you cut down your spending{"\n"}and prune some
             subscriptions.
           </ThemedText>
-        </ThemedView>
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <TextInput
-            editable
-            multiline
-            numberOfLines={15}
-            onChangeText={(text) => onChangeText(text)}
-            placeholder={text}
-            style={styles.textInput}
-          />
-        </ThemedView>
-        <ThemedView style={styles.heroSection}>
+          <ThemedView type="backgroundElement" style={styles.stepContainer}>
+            <TextInput
+              editable
+              multiline
+              numberOfLines={15}
+              onChangeText={(statement) => onChangeText(statement)}
+              placeholder={statement}
+              style={styles.textInput}
+            />
+          </ThemedView>
           <ThemedView type="backgroundElement" style={styles.linkButton}>
             <Link
               href={{
                 pathname: "/analysis",
-                params: { add: 86 },
+                params: { statement: statement },
               }}
             >
               <ThemedText type="link">Begin analysis</ThemedText>
-              <SymbolView
-                tintColor={theme.text}
-                name={{
-                  ios: "dollarsign.circle",
-                  android: "paid",
-                  web: "paid",
-                }}
-                size={14}
-              />
             </Link>
           </ThemedView>
         </ThemedView>
@@ -83,25 +71,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.four,
     gap: Spacing.four,
   },
-  centerText: {
-    textAlign: "center",
-  },
-  code: {
-    textTransform: "uppercase",
-  },
   textInput: {
     padding: 10,
     borderColor: "#000000",
     borderWidth: 1.5,
     borderRadius: Spacing.two,
+    width: MaxContentWidth,
     margin: 12,
   },
   stepContainer: {
     gap: Spacing.three,
-    alignSelf: "stretch",
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.four,
     borderRadius: Spacing.four,
+  },
+  centerText: {
+    textAlign: "center",
   },
   pressed: {
     opacity: 0.7,
