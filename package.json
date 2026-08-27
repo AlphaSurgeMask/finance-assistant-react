@@ -8,7 +8,7 @@
     "expo-linking": "~57.0.8",
     "expo-router": "~57.0.17",
     "expo-splash-screen": "~57.0.8",
-    "react": "19.2.3",
+    "react": "19.2.8",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
     "react-native-chart-kit": "^7.0.2",
