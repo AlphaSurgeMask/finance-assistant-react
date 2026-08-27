@@ -8,11 +8,11 @@ import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
 export default function AnalysisScreen() {
-  const statement = useLocalSearchParams();
+  const statement = (useLocalSearchParams().statement as string).split("\n");
   const demoData = [
-    { month: "Jan", Coles: 180, GymMembership: 60 },
-    { month: "Feb", Coles: 520, GymMembership: 210 },
-    { month: "Mar", Coles: 260, GymMembership: 120 },
+    { month: "January", Coles: 180, GymMembership: 60 },
+    { month: "February", Coles: 520, GymMembership: 210 },
+    { month: "March", Coles: 260, GymMembership: 120 },
   ];
 
   return (
@@ -24,7 +24,7 @@ export default function AnalysisScreen() {
             Finance Analysis
           </ThemedText>
           <ThemedText style={styles.centerText} themeColor="textSecondary">
-            This is where we will take a {"\n"} deeper look at your finances.
+            {statement[2]}
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <BarChart
@@ -35,6 +35,15 @@ export default function AnalysisScreen() {
                 { yKey: "Coles", label: "Coles" },
                 { yKey: "GymMembership", label: "Gym Membership" },
               ]}
+              interaction={{
+                mode: "tap",
+                deselectOnOutsidePress: true,
+              }}
+              tooltip={{
+                anchor: "pointer",
+                placement: "above",
+                width: 170,
+              }}
               width={MaxContentWidth}
               height={480}
             />
