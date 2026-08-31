@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "expo": "~57.0.17",
-    "expo-constants": "~57.0.13",
+    "expo-constants": "~57.0.16",
     "expo-linking": "~57.0.8",
     "expo-router": "~57.0.17",
     "expo-splash-screen": "~57.0.8",
