@@ -44,6 +44,18 @@ export default function AnalysisScreen() {
     }
   });
 
+  statementEvents = statementEvents
+    .join()
+    .split("  ")
+    .filter((n) => n)
+    .map((item) => item.trim());
+
+  for (let i = 0; i < statementEvents.length; i++) {
+    if (statementEvents[i][statementEvents[i].indexOf(".") + 3] === ",") {
+      console.log("Date found at: " + statementEvents[i]);
+    }
+  }
+
   console.log(statementEvents);
   console.log(statement);
 
