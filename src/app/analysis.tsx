@@ -7,13 +7,45 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
+function removeString(array: any[], string: string) {
+  array.forEach((item, index) => {
+    if (item === string) {
+      array.splice(index, 1);
+    }
+  });
+  return array;
+}
+
 export default function AnalysisScreen() {
-  const statement = (useLocalSearchParams().statement as string).split("\n");
+  let statement = (useLocalSearchParams().statement as string)
+    .split("\n")
+    .filter((n) => n);
   const demoData = [
     { month: "January", Coles: 180, GymMembership: 60 },
     { month: "February", Coles: 520, GymMembership: 210 },
     { month: "March", Coles: 260, GymMembership: 120 },
   ];
+
+  removeString(
+    statement,
+    "------------------------------------------------------------------------------------------------",
+  );
+
+  let statementEvents = statement.slice(
+    6,
+    statement.findIndex((element) => element.includes("Total Income")),
+  );
+
+  statement.splice(6, statement.length - 9);
+
+  statementEvents.forEach((item, index) => {
+    if (item === "") {
+      statementEvents.splice(index, 1);
+    }
+  });
+
+  console.log(statementEvents);
+  console.log(statement);
 
   return (
     <ThemedView style={styles.container}>
@@ -24,7 +56,7 @@ export default function AnalysisScreen() {
             Finance Analysis
           </ThemedText>
           <ThemedText style={styles.centerText} themeColor="textSecondary">
-            {statement[2]}
+            {statement[1]}
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <BarChart
