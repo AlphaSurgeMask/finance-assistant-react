@@ -60,13 +60,14 @@ export default function AnalysisScreen() {
           statementEvents[i].length - statementEvents[i].indexOf(".") - 2,
         ),
       );
+
       statementEvents.splice(
         i + 1,
         1,
         statementEvents[i + 1].slice(
           statementEvents[i + 1].length -
-            statementEvents[i + 1].indexOf(".") -
-            1,
+            statementEvents[i + 1].indexOf(".") +
+            2,
         ),
       );
     }
