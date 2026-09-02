@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { BarChart } from "react-native-chart-kit/v2";
+import { ChartKitProvider, BarChart } from "react-native-chart-kit/v2";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
@@ -88,26 +88,28 @@ export default function AnalysisScreen() {
             {statement[1]}
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
-            <BarChart
-              data={demoData}
-              xKey="month"
-              mode="stacked"
-              series={[
-                { yKey: "Coles", label: "Coles" },
-                { yKey: "GymMembership", label: "Gym Membership" },
-              ]}
-              interaction={{
-                mode: "tap",
-                deselectOnOutsidePress: true,
-              }}
-              tooltip={{
-                anchor: "pointer",
-                placement: "above",
-                width: 170,
-              }}
-              width={MaxContentWidth}
-              height={480}
-            />
+            <ChartKitProvider mode="system">
+              <BarChart
+                data={demoData}
+                xKey="month"
+                mode="stacked"
+                series={[
+                  { yKey: "Coles", label: "Coles" },
+                  { yKey: "GymMembership", label: "Gym Membership" },
+                ]}
+                interaction={{
+                  mode: "tap",
+                  deselectOnOutsidePress: true,
+                }}
+                tooltip={{
+                  anchor: "pointer",
+                  placement: "above",
+                  width: 170,
+                }}
+                width={MaxContentWidth}
+                height={480}
+              />
+            </ChartKitProvider>
           </ThemedView>
         </ThemedView>
       </SafeAreaView>
