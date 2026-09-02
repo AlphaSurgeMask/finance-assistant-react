@@ -52,7 +52,19 @@ export default function AnalysisScreen() {
 
   for (let i = 0; i < statementEvents.length; i++) {
     if (statementEvents[i][statementEvents[i].indexOf(".") + 3] === ",") {
-      console.log("Date found at: " + statementEvents[i]);
+      console.log(
+        "Numbers: " +
+          statementEvents[i].slice(
+            0,
+            statementEvents[i].length - statementEvents[i].indexOf(".") - 2,
+          ),
+      );
+      console.log(
+        "Date: " +
+          statementEvents[i].slice(
+            statementEvents[i].length - statementEvents[i].indexOf(".") - 1,
+          ),
+      );
     }
   }
 

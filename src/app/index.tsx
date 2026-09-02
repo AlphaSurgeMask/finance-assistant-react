@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Stack } from "expo-router";
-import { TextInput, StyleSheet } from "react-native";
+import { TextInput, StyleSheet, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/components/themed-text";
@@ -11,6 +11,9 @@ export default function HomeScreen() {
   const [statement, onChangeText] = useState(
     "Input your bank statement here...",
   );
+  const colorScheme = useColorScheme();
+  const themeContainerStyle =
+    colorScheme === "light" ? styles.lightTextArea : styles.darkTextArea;
 
   return (
     <ThemedView style={styles.container}>
@@ -31,7 +34,7 @@ export default function HomeScreen() {
               numberOfLines={15}
               onChangeText={(statement) => onChangeText(statement)}
               placeholder={statement}
-              style={styles.textInput}
+              style={[styles.textInput, themeContainerStyle]}
             />
           </ThemedView>
           <ThemedView type="backgroundElement" style={styles.linkButton}>
@@ -73,11 +76,18 @@ const styles = StyleSheet.create({
   },
   textInput: {
     padding: 10,
-    borderColor: "#000000",
     borderWidth: 1.5,
     borderRadius: Spacing.two,
     width: MaxContentWidth,
     margin: 12,
+  },
+  lightTextArea: {
+    borderColor: "#000000",
+    color: "#000000",
+  },
+  darkTextArea: {
+    borderColor: "#ffffff",
+    color: "#ffffff",
   },
   stepContainer: {
     gap: Spacing.three,
