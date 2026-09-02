@@ -50,20 +50,24 @@ export default function AnalysisScreen() {
     .filter((n) => n)
     .map((item) => item.trim());
 
-  for (let i = 0; i < statementEvents.length; i++) {
+  for (let i = 0; i < statementEvents.length; i += 2) {
     if (statementEvents[i][statementEvents[i].indexOf(".") + 3] === ",") {
-      console.log(
-        "Numbers: " +
-          statementEvents[i].slice(
-            0,
-            statementEvents[i].length - statementEvents[i].indexOf(".") - 2,
-          ),
+      statementEvents.splice(
+        i,
+        0,
+        statementEvents[i].slice(
+          0,
+          statementEvents[i].length - statementEvents[i].indexOf(".") - 2,
+        ),
       );
-      console.log(
-        "Date: " +
-          statementEvents[i].slice(
-            statementEvents[i].length - statementEvents[i].indexOf(".") - 1,
-          ),
+      statementEvents.splice(
+        i + 1,
+        1,
+        statementEvents[i + 1].slice(
+          statementEvents[i + 1].length -
+            statementEvents[i + 1].indexOf(".") -
+            1,
+        ),
       );
     }
   }
