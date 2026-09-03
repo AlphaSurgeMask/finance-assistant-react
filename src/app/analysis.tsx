@@ -17,14 +17,17 @@ function removeString(array: any[], string: string) {
 }
 
 export default function AnalysisScreen() {
-  let statement = (useLocalSearchParams().statement as string)
-    .split("\n")
-    .filter((n) => n);
-  const demoData = [
+  const graph = [
     { month: "January", Coles: 180, GymMembership: 60 },
     { month: "February", Coles: 520, GymMembership: 210 },
     { month: "March", Coles: 260, GymMembership: 120 },
   ];
+
+  let months = [];
+
+  let statement = (useLocalSearchParams().statement as string)
+    .split("\n")
+    .filter((n) => n);
 
   removeString(
     statement,
@@ -83,7 +86,14 @@ export default function AnalysisScreen() {
 
   statementEvents[0] = statementEvents[0].slice(3);
 
+  for (let i = 0; i < statementEvents.length; i += 4) {
+    if (months.indexOf(statementEvents[i]) === -1) {
+      months.push(statementEvents[i]);
+    }
+  }
+
   console.log("\n");
+  console.log(months);
   console.log(statementEvents);
   console.log(statement);
 
@@ -101,7 +111,7 @@ export default function AnalysisScreen() {
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <ChartKitProvider mode="system">
               <BarChart
-                data={demoData}
+                data={graph}
                 xKey="month"
                 mode="stacked"
                 series={[
