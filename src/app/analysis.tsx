@@ -38,6 +38,13 @@ export default function AnalysisScreen() {
 
   statement.splice(6, statement.length - 9);
 
+  for (let i = 0; i < statementEvents.length; i++) {
+    if (statementEvents[i].indexOf(".") > 65) {
+      statementEvents.splice(i, 1);
+      i--;
+    }
+  }
+
   statementEvents.forEach((item, index) => {
     if (item === "") {
       statementEvents.splice(index, 1);
@@ -50,7 +57,7 @@ export default function AnalysisScreen() {
     .filter((n) => n)
     .map((item) => item.trim());
 
-  for (let i = 0; i < statementEvents.length; i += 2) {
+  for (let i = 0; i < statementEvents.length; i++) {
     if (statementEvents[i][statementEvents[i].indexOf(".") + 3] === ",") {
       statementEvents.splice(
         i,
@@ -70,9 +77,13 @@ export default function AnalysisScreen() {
             2,
         ),
       );
+      i++;
     }
   }
 
+  statementEvents[0] = statementEvents[0].slice(3);
+
+  console.log("\n");
   console.log(statementEvents);
   console.log(statement);
 
