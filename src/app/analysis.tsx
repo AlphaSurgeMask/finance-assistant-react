@@ -17,13 +17,10 @@ function removeString(array: any[], string: string) {
 }
 
 export default function AnalysisScreen() {
-  const graph = [
-    { month: "January", Coles: 180, GymMembership: 60 },
-    { month: "February", Coles: 520, GymMembership: 210 },
-    { month: "March", Coles: 260, GymMembership: 120 },
-  ];
-
+  let graph = [];
+  let ySeries = [];
   let months = [];
+  let costs = [];
 
   let statement = (useLocalSearchParams().statement as string)
     .split("\n")
@@ -92,10 +89,31 @@ export default function AnalysisScreen() {
     }
   }
 
-  console.log("\n");
-  console.log(months);
-  console.log(statementEvents);
-  console.log(statement);
+  for (let j = 1; j < statementEvents.length; j += 4) {
+    costs.push(statementEvents[j]);
+  }
+
+  costs = costs.filter((item, index) => costs.indexOf(item) === index);
+
+  for (let i = 0; i < months.length; i++) {
+    let graphColumn = {
+      month: months[i],
+    };
+
+    for (let j = 1; j < statementEvents.length; j += 4) {
+      if (statementEvents[j - 1] === months[i]) {
+        graphColumn[statementEvents[j]] = Number(statementEvents[j + 1]);
+      }
+    }
+    graph.push(graphColumn);
+  }
+
+  for (let i = 0; i < costs.length; i++) {
+    let ySeriesRow = {};
+    ySeriesRow["yKey"] = costs[i];
+    ySeriesRow["label"] = costs[i];
+    ySeries.push(ySeriesRow);
+  }
 
   return (
     <ThemedView style={styles.container}>
@@ -114,10 +132,9 @@ export default function AnalysisScreen() {
                 data={graph}
                 xKey="month"
                 mode="stacked"
-                series={[
-                  { yKey: "Coles", label: "Coles" },
-                  { yKey: "GymMembership", label: "Gym Membership" },
-                ]}
+                series={ySeries}
+                orientation="horizontal"
+                scrollable
                 interaction={{
                   mode: "tap",
                   deselectOnOutsidePress: true,
