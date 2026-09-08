@@ -2,7 +2,11 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ChartKitProvider, BarChart } from "react-native-chart-kit/v2";
+import {
+  ChartKitProvider,
+  BarChart,
+  createChartPreset,
+} from "react-native-chart-kit/v2";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
@@ -17,6 +21,34 @@ function removeString(array: any[], string: string) {
 }
 
 export default function AnalysisScreen() {
+  const acme = createChartPreset({
+    light: {
+      background: "#ffffff",
+      grid: "#e5edf7",
+      series: [
+        "#0a84ff",
+        "#30d158",
+        "#ff9f0a",
+        "#ff375f",
+        "#7c3aed",
+        "#64748b",
+      ],
+    },
+    dark: {
+      background: "#07111f",
+      plotBackground: "#0b1627",
+      grid: "#1d3554",
+      series: [
+        "#0a84ff",
+        "#30d158",
+        "#ff9f0a",
+        "#ff375f",
+        "#7c3aed",
+        "#64748b",
+      ],
+    },
+  });
+
   let graph = [];
   let ySeries = [];
   let months = [];
@@ -127,7 +159,7 @@ export default function AnalysisScreen() {
             {statement[1]}
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
-            <ChartKitProvider mode="system">
+            <ChartKitProvider mode="system" preset="acme" presets={{ acme }}>
               <BarChart
                 data={graph}
                 xKey="month"
