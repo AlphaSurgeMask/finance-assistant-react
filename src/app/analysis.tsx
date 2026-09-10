@@ -52,7 +52,7 @@ export default function AnalysisScreen() {
   let graph = [];
   let ySeries = [];
   let months = [];
-  let costs = [];
+  let costs: any[] = [];
 
   let statement = (useLocalSearchParams().statement as string)
     .split("\n")
@@ -128,7 +128,7 @@ export default function AnalysisScreen() {
   costs = costs.filter((item, index) => costs.indexOf(item) === index);
 
   for (let i = 0; i < months.length; i++) {
-    let graphColumn = {
+    let graphColumn: any = {
       month: months[i],
     };
 
@@ -141,7 +141,7 @@ export default function AnalysisScreen() {
   }
 
   for (let i = 0; i < costs.length; i++) {
-    let ySeriesRow = {};
+    let ySeriesRow: any = {};
     ySeriesRow["yKey"] = costs[i];
     ySeriesRow["label"] = costs[i];
     ySeries.push(ySeriesRow);
