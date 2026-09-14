@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
@@ -10,6 +10,10 @@ import {
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
+
+function changeChart(chart: string) {
+  console.log("Now using: " + chart);
+}
 
 function removeString(array: any[], string: string) {
   array.forEach((item, index) => {
@@ -180,6 +184,9 @@ export default function AnalysisScreen() {
                 height={480}
               />
             </ChartKitProvider>
+            <Button title="Bar Graph" onPress={() => changeChart("bar")} />
+            <Button title="Line Graph" onPress={() => changeChart("line")} />
+            <Button title="Donut Graph" onPress={() => changeChart("donut")} />
           </ThemedView>
         </ThemedView>
       </SafeAreaView>
