@@ -1,10 +1,12 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Button } from "react-native";
+import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import {
   ChartKitProvider,
   BarChart,
+  DonutChart,
   createChartPreset,
 } from "react-native-chart-kit/v2";
 import { ThemedText } from "@/components/themed-text";
@@ -53,7 +55,10 @@ export default function AnalysisScreen() {
     },
   });
 
-  let graph = [];
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  let donutGraph = [];
+  let barGraph = [];
   let ySeries = [];
   let months = [];
   let costs: any[] = [];
@@ -141,7 +146,24 @@ export default function AnalysisScreen() {
         graphColumn[statementEvents[j]] = Number(statementEvents[j + 1]);
       }
     }
-    graph.push(graphColumn);
+    barGraph.push(graphColumn);
+  }
+
+  for (let i = 0; i < months.length; i++) {
+    let tempCost = 0;
+
+    for (let j = 1; j < statementEvents.length; j += 4) {
+      if (statementEvents[j - 1] === months[i]) {
+        tempCost += Number(statementEvents[j + 1]);
+      }
+    }
+
+    let graphColumn: any = {
+      month: months[i],
+      cost: Number(tempCost.toFixed(2)),
+    };
+
+    donutGraph.push(graphColumn);
   }
 
   for (let i = 0; i < costs.length; i++) {
@@ -164,8 +186,8 @@ export default function AnalysisScreen() {
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <ChartKitProvider mode="system" preset="acme" presets={{ acme }}>
-              <BarChart
-                data={graph}
+              {/* <BarChart
+                data={barGraph}
                 xKey="month"
                 mode="stacked"
                 series={ySeries}
@@ -182,11 +204,35 @@ export default function AnalysisScreen() {
                 }}
                 width={MaxContentWidth}
                 height={480}
+              /> */}
+
+              <DonutChart
+                data={donutGraph}
+                valueKey="cost"
+                labelKey="month"
+                selectedIndex={selectedIndex}
+                interaction={{
+                  mode: "tap",
+                  onSelect: (event) => setSelectedIndex(event.index),
+                }}
+                centerLabel={
+                  donutGraph[selectedIndex]?.month +
+                  ": $" +
+                  donutGraph[selectedIndex]?.cost
+                }
+                activeSlice={{ inactiveOpacity: 0.36, strokeWidth: 4 }}
+                width={615}
+                height={390}
               />
             </ChartKitProvider>
-            <Button title="Bar Graph" onPress={() => changeChart("bar")} />
-            <Button title="Line Graph" onPress={() => changeChart("line")} />
-            <Button title="Donut Graph" onPress={() => changeChart("donut")} />
+            <ThemedView style={styles.fixToText}>
+              <Button title="Bar Graph" onPress={() => changeChart("bar")} />
+              <Button title="Line Graph" onPress={() => changeChart("line")} />
+              <Button
+                title="Donut Graph"
+                onPress={() => changeChart("donut")}
+              />
+            </ThemedView>
           </ThemedView>
         </ThemedView>
       </SafeAreaView>
@@ -235,5 +281,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: Spacing.one,
     alignItems: "center",
+  },
+  fixToText: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
 });
