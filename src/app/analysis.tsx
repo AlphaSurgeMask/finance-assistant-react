@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ChartKitProvider,
   BarChart,
+  LineChart,
   DonutChart,
   createChartPreset,
 } from "react-native-chart-kit/v2";
@@ -59,7 +60,8 @@ export default function AnalysisScreen() {
 
   let donutGraph = [];
   let barGraph = [];
-  let ySeries = [];
+  let barYSeries = [];
+  let lineYSeries = [];
   let months = [];
   let costs: any[] = [];
 
@@ -167,10 +169,17 @@ export default function AnalysisScreen() {
   }
 
   for (let i = 0; i < costs.length; i++) {
-    let ySeriesRow: any = {};
-    ySeriesRow["yKey"] = costs[i];
-    ySeriesRow["label"] = costs[i];
-    ySeries.push(ySeriesRow);
+    let barYSeriesRow: any = {};
+    barYSeriesRow["yKey"] = costs[i];
+    barYSeriesRow["label"] = costs[i];
+    barYSeries.push(barYSeriesRow);
+  }
+
+  for (let i = 0; i < months.length; i++) {
+    let lineYSeriesRow: any = {};
+    lineYSeriesRow["yKey"] = months[i];
+    lineYSeriesRow["label"] = months[i];
+    lineYSeries.push(lineYSeriesRow);
   }
 
   return (
@@ -190,7 +199,7 @@ export default function AnalysisScreen() {
                 data={barGraph}
                 xKey="month"
                 mode="stacked"
-                series={ySeries}
+                series={barYSeries}
                 orientation="horizontal"
                 scrollable
                 interaction={{
@@ -206,7 +215,16 @@ export default function AnalysisScreen() {
                 height={480}
               /> */}
 
-              <DonutChart
+              <LineChart
+                data={barGraph}
+                xKey="month"
+                series={lineYSeries}
+                legend={{ position: "bottom", wrap: true }}
+                width={410}
+                height={260}
+              />
+
+              {/* <DonutChart
                 data={donutGraph}
                 valueKey="cost"
                 labelKey="month"
@@ -223,7 +241,7 @@ export default function AnalysisScreen() {
                 activeSlice={{ inactiveOpacity: 0.36, strokeWidth: 4 }}
                 width={615}
                 height={390}
-              />
+              /> */}
             </ChartKitProvider>
             <ThemedView style={styles.fixToText}>
               <Button title="Bar Graph" onPress={() => changeChart("bar")} />
