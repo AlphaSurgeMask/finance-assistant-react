@@ -58,10 +58,9 @@ export default function AnalysisScreen() {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  let donutGraph = [];
+  let otherGraph = [];
   let barGraph = [];
   let barYSeries = [];
-  let lineYSeries = [];
   let months = [];
   let costs: any[] = [];
 
@@ -165,21 +164,16 @@ export default function AnalysisScreen() {
       cost: Number(tempCost.toFixed(2)),
     };
 
-    donutGraph.push(graphColumn);
+    otherGraph.push(graphColumn);
   }
+
+  console.log(otherGraph);
 
   for (let i = 0; i < costs.length; i++) {
     let barYSeriesRow: any = {};
     barYSeriesRow["yKey"] = costs[i];
     barYSeriesRow["label"] = costs[i];
     barYSeries.push(barYSeriesRow);
-  }
-
-  for (let i = 0; i < months.length; i++) {
-    let lineYSeriesRow: any = {};
-    lineYSeriesRow["yKey"] = months[i];
-    lineYSeriesRow["label"] = months[i];
-    lineYSeries.push(lineYSeriesRow);
   }
 
   return (
@@ -216,16 +210,26 @@ export default function AnalysisScreen() {
               /> */}
 
               <LineChart
-                data={barGraph}
+                data={otherGraph}
                 xKey="month"
-                series={lineYSeries}
-                legend={{ position: "bottom", wrap: true }}
+                yKey="cost"
                 width={410}
                 height={260}
+                interaction={{
+                  mode: "tap",
+                  selectionPersistence: "persist",
+                }}
+                tooltip={{
+                  shared: true,
+                  anchor: "pointer",
+                  placement: "above",
+                  offset: 18,
+                  positionAnimationDuration: 320,
+                }}
               />
 
               {/* <DonutChart
-                data={donutGraph}
+                data={otherGraph}
                 valueKey="cost"
                 labelKey="month"
                 selectedIndex={selectedIndex}
@@ -234,9 +238,9 @@ export default function AnalysisScreen() {
                   onSelect: (event) => setSelectedIndex(event.index),
                 }}
                 centerLabel={
-                  donutGraph[selectedIndex]?.month +
+                  otherGraph[selectedIndex]?.month +
                   ": $" +
-                  donutGraph[selectedIndex]?.cost
+                  otherGraph[selectedIndex]?.cost
                 }
                 activeSlice={{ inactiveOpacity: 0.36, strokeWidth: 4 }}
                 width={615}
