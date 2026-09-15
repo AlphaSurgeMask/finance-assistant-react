@@ -14,10 +14,6 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
-function changeChart(chart: string) {
-  console.log("Now using: " + chart);
-}
-
 function removeString(array: any[], string: string) {
   array.forEach((item, index) => {
     if (item === string) {
@@ -28,6 +24,10 @@ function removeString(array: any[], string: string) {
 }
 
 export default function AnalysisScreen() {
+  const [barGraphShow, barSetShouldShow] = useState(true);
+  const [lineGraphShow, lineSetShouldShow] = useState(false);
+  const [donutGraphShow, donutSetShouldShow] = useState(false);
+
   const acme = createChartPreset({
     light: {
       background: "#ffffff",
@@ -167,8 +167,6 @@ export default function AnalysisScreen() {
     otherGraph.push(graphColumn);
   }
 
-  console.log(otherGraph);
-
   for (let i = 0; i < costs.length; i++) {
     let barYSeriesRow: any = {};
     barYSeriesRow["yKey"] = costs[i];
@@ -189,70 +187,82 @@ export default function AnalysisScreen() {
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <ChartKitProvider mode="system" preset="acme" presets={{ acme }}>
-              {/* <BarChart
-                data={barGraph}
-                xKey="month"
-                mode="stacked"
-                series={barYSeries}
-                orientation="horizontal"
-                scrollable
-                interaction={{
-                  mode: "tap",
-                  deselectOnOutsidePress: true,
-                }}
-                tooltip={{
-                  anchor: "pointer",
-                  placement: "above",
-                  width: 170,
-                }}
-                width={MaxContentWidth}
-                height={480}
-              /> */}
+              {barGraphShow ? (
+                <BarChart
+                  data={barGraph}
+                  xKey="month"
+                  mode="stacked"
+                  series={barYSeries}
+                  orientation="horizontal"
+                  scrollable
+                  interaction={{
+                    mode: "tap",
+                    deselectOnOutsidePress: true,
+                  }}
+                  tooltip={{
+                    anchor: "pointer",
+                    placement: "above",
+                    width: 170,
+                  }}
+                  width={MaxContentWidth}
+                  height={480}
+                />
+              ) : null}
 
-              <LineChart
-                data={otherGraph}
-                xKey="month"
-                yKey="cost"
-                width={410}
-                height={260}
-                interaction={{
-                  mode: "tap",
-                  selectionPersistence: "persist",
-                }}
-                tooltip={{
-                  shared: true,
-                  anchor: "pointer",
-                  placement: "above",
-                  offset: 18,
-                  positionAnimationDuration: 320,
-                }}
-              />
+              {lineGraphShow ? (
+                <LineChart
+                  data={otherGraph}
+                  xKey="month"
+                  yKey="cost"
+                  width={410}
+                  height={260}
+                  interaction={{
+                    mode: "tap",
+                    selectionPersistence: "persist",
+                  }}
+                  tooltip={{
+                    shared: true,
+                    anchor: "pointer",
+                    placement: "above",
+                    offset: 18,
+                    positionAnimationDuration: 320,
+                  }}
+                />
+              ) : null}
 
-              {/* <DonutChart
-                data={otherGraph}
-                valueKey="cost"
-                labelKey="month"
-                selectedIndex={selectedIndex}
-                interaction={{
-                  mode: "tap",
-                  onSelect: (event) => setSelectedIndex(event.index),
-                }}
-                centerLabel={
-                  otherGraph[selectedIndex]?.month +
-                  ": $" +
-                  otherGraph[selectedIndex]?.cost
-                }
-                activeSlice={{ inactiveOpacity: 0.36, strokeWidth: 4 }}
-                width={615}
-                height={390}
-              /> */}
+              {donutGraphShow ? (
+                <DonutChart
+                  data={otherGraph}
+                  valueKey="cost"
+                  labelKey="month"
+                  selectedIndex={selectedIndex}
+                  interaction={{
+                    mode: "tap",
+                    onSelect: (event) => setSelectedIndex(event.index),
+                  }}
+                  centerLabel={
+                    otherGraph[selectedIndex]?.month +
+                    ": $" +
+                    otherGraph[selectedIndex]?.cost
+                  }
+                  activeSlice={{ inactiveOpacity: 0.36, strokeWidth: 4 }}
+                  width={615}
+                  height={390}
+                />
+              ) : null}
             </ChartKitProvider>
             <ThemedView style={styles.fixToText}>
-              <Button title="Bar Graph" onPress={() => changeChart("bar")} />
-              <Button title="Line Graph" onPress={() => changeChart("line")} />
+              <Button
+                title="Bar Graph"
+                onPress={() => barSetShouldShow(!barGraphShow)}
+              />
+              <Button
+                title="Line Graph"
+                onPress={() => lineSetShouldShow(!lineGraphShow)}
+              />
               <Button
                 title="Donut Graph"
-                onPress={() => changeChart("donut")}
+                onPress={() => donutSetShouldShow(!donutGraphShow)}
               />
             </ThemedView>
           </ThemedView>
