@@ -28,6 +28,24 @@ export default function AnalysisScreen() {
   const [lineGraphShow, lineSetShouldShow] = useState(false);
   const [donutGraphShow, donutSetShouldShow] = useState(false);
 
+  function toggleGraph(visibleGraph) {
+    if (visibleGraph === "bar") {
+      barSetShouldShow(true);
+      lineSetShouldShow(false);
+      donutSetShouldShow(false);
+    }
+    if (visibleGraph === "line") {
+      barSetShouldShow(false);
+      lineSetShouldShow(true);
+      donutSetShouldShow(false);
+    }
+    if (visibleGraph === "donut") {
+      barSetShouldShow(false);
+      lineSetShouldShow(false);
+      donutSetShouldShow(true);
+    }
+  }
+
   const acme = createChartPreset({
     light: {
       background: "#ffffff",
@@ -214,8 +232,8 @@ export default function AnalysisScreen() {
                   data={otherGraph}
                   xKey="month"
                   yKey="cost"
-                  width={410}
-                  height={260}
+                  width={MaxContentWidth}
+                  height={480}
                   interaction={{
                     mode: "tap",
                     selectionPersistence: "persist",
@@ -246,23 +264,17 @@ export default function AnalysisScreen() {
                     otherGraph[selectedIndex]?.cost
                   }
                   activeSlice={{ inactiveOpacity: 0.36, strokeWidth: 4 }}
-                  width={615}
-                  height={390}
+                  width={MaxContentWidth}
+                  height={480}
                 />
               ) : null}
             </ChartKitProvider>
             <ThemedView style={styles.fixToText}>
-              <Button
-                title="Bar Graph"
-                onPress={() => barSetShouldShow(!barGraphShow)}
-              />
-              <Button
-                title="Line Graph"
-                onPress={() => lineSetShouldShow(!lineGraphShow)}
-              />
+              <Button title="Bar Graph" onPress={() => toggleGraph("bar")} />
+              <Button title="Line Graph" onPress={() => toggleGraph("line")} />
               <Button
                 title="Donut Graph"
-                onPress={() => donutSetShouldShow(!donutGraphShow)}
+                onPress={() => toggleGraph("donut")}
               />
             </ThemedView>
           </ThemedView>
