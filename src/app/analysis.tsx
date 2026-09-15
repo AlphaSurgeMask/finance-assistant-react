@@ -10,6 +10,7 @@ import {
   DonutChart,
   createChartPreset,
 } from "react-native-chart-kit/v2";
+import Slider from "@react-native-community/slider";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
@@ -133,8 +134,8 @@ export default function AnalysisScreen() {
         1,
         statementEvents[i + 1].slice(
           statementEvents[i + 1].length -
-            statementEvents[i + 1].indexOf(".") +
-            2,
+          statementEvents[i + 1].indexOf(".") +
+          2,
         ),
       );
       i++;
@@ -275,6 +276,26 @@ export default function AnalysisScreen() {
               <Button
                 title="Donut Graph"
                 onPress={() => toggleGraph("donut")}
+              />
+            </ThemedView>
+            <ThemedView>
+              <Slider
+                style={{ width: { MaxContentWidth }, height: 40 }}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                thumbSize={32}
+              />
+            </ThemedView>
+            <ThemedView>
+              <Slider
+                style={{ width: { MaxContentWidth }, height: 40 }}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="#FFFFFF"
+                maximumTrackTintColor="#000000"
+                thumbSize={32}
               />
             </ThemedView>
           </ThemedView>
