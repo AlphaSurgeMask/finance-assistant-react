@@ -278,6 +278,9 @@ export default function AnalysisScreen() {
                 onPress={() => toggleGraph("donut")}
               />
             </ThemedView>
+            <ThemedText style={styles.centerText}>
+              Current interest rate
+            </ThemedText>
             <ThemedView style={{ borderRadius: Spacing.four }}>
               <Slider
                 style={styles.userSlider}
@@ -289,6 +292,7 @@ export default function AnalysisScreen() {
                 thumbSize={32}
               />
             </ThemedView>
+            <ThemedText style={styles.centerText}>Possible savings</ThemedText>
             <ThemedView style={{ borderRadius: Spacing.four }}>
               <Slider
                 style={styles.userSlider}
