@@ -134,8 +134,8 @@ export default function AnalysisScreen() {
         1,
         statementEvents[i + 1].slice(
           statementEvents[i + 1].length -
-          statementEvents[i + 1].indexOf(".") +
-          2,
+            statementEvents[i + 1].indexOf(".") +
+            2,
         ),
       );
       i++;
@@ -278,23 +278,25 @@ export default function AnalysisScreen() {
                 onPress={() => toggleGraph("donut")}
               />
             </ThemedView>
-            <ThemedView>
+            <ThemedView style={{ borderRadius: Spacing.four }}>
               <Slider
-                style={{ width: { MaxContentWidth }, height: 40 }}
+                style={styles.userSlider}
                 minimumValue={0}
                 maximumValue={1}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                value={0.5}
+                minimumTrackTintColor="#000000"
+                maximumTrackTintColor="#FFFFFF"
                 thumbSize={32}
               />
             </ThemedView>
-            <ThemedView>
+            <ThemedView style={{ borderRadius: Spacing.four }}>
               <Slider
-                style={{ width: { MaxContentWidth }, height: 40 }}
+                style={styles.userSlider}
                 minimumValue={0}
                 maximumValue={1}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                value={0.5}
+                minimumTrackTintColor="#000000"
+                maximumTrackTintColor="#FFFFFF"
                 thumbSize={32}
               />
             </ThemedView>
@@ -310,6 +312,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     flexDirection: "row",
+  },
+  userSlider: {
+    width: { MaxContentWidth },
+    height: 40,
   },
   safeArea: {
     flex: 1,
@@ -350,5 +356,6 @@ const styles = StyleSheet.create({
   fixToText: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+    borderRadius: Spacing.four,
   },
 });
