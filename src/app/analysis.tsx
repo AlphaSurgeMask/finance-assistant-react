@@ -15,6 +15,18 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
+const SliderText = (props: SliderProps) => {
+  const [value, setValue] = useState(0);
+  return (
+    <ThemedView style={{ borderRadius: Spacing.four }}>
+      <ThemedText style={styles.centerText}>
+        {value && +value.toFixed(2)}
+      </ThemedText>
+      <Slider {...props} onValueChange={setValue} />
+    </ThemedView>
+  );
+};
+
 function removeString(array: any[], string: string) {
   array.forEach((item, index) => {
     if (item === string) {
@@ -82,6 +94,7 @@ export default function AnalysisScreen() {
   let barYSeries = [];
   let months = [];
   let costs: any[] = [];
+  let totalCost = 0;
 
   let statement = (useLocalSearchParams().statement as string)
     .split("\n")
@@ -183,6 +196,8 @@ export default function AnalysisScreen() {
       cost: Number(tempCost.toFixed(2)),
     };
 
+    totalCost += Number(tempCost.toFixed(2));
+
     otherGraph.push(graphColumn);
   }
 
@@ -210,7 +225,7 @@ export default function AnalysisScreen() {
                 <BarChart
                   data={barGraph}
                   xKey="month"
-                  mode="stacked"
+                  mode="stacked100"
                   series={barYSeries}
                   orientation="horizontal"
                   scrollable
@@ -279,28 +294,36 @@ export default function AnalysisScreen() {
               />
             </ThemedView>
             <ThemedText style={styles.centerText}>
-              Current interest rate
+              Current interest rate (%)
             </ThemedText>
             <ThemedView style={{ borderRadius: Spacing.four }}>
-              <Slider
+              <SliderText
                 style={styles.userSlider}
-                minimumValue={0}
-                maximumValue={1}
-                value={0.5}
+                minimumValue={-1}
+                maximumValue={7}
+                step={0.1}
+                value={0.4}
+                lowerLimit={0}
+                upperLimit={6}
+                thumbTintColor="#2196F3"
                 minimumTrackTintColor="#000000"
                 maximumTrackTintColor="#FFFFFF"
                 thumbSize={32}
               />
             </ThemedView>
-            <ThemedText style={styles.centerText}>Possible savings</ThemedText>
+            <ThemedText style={styles.centerText}>
+              Possible savings ($)
+            </ThemedText>
             <ThemedView style={{ borderRadius: Spacing.four }}>
-              <Slider
+              <SliderText
                 style={styles.userSlider}
                 minimumValue={0}
-                maximumValue={1}
-                value={0.5}
+                maximumValue={totalCost}
+                step={1}
+                value={0.4}
                 minimumTrackTintColor="#000000"
                 maximumTrackTintColor="#FFFFFF"
+                thumbTintColor="#2196F3"
                 thumbSize={32}
               />
             </ThemedView>
