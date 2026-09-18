@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@react-native-community/slider": "5.2.0",
-    "expo": "~57.0.22",
+    "expo": "~57.0.23",
     "expo-constants": "~57.0.13",
     "expo-linking": "~57.0.10",
     "expo-router": "~57.0.21",
