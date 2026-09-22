@@ -1,5 +1,5 @@
 import { Stack, useLocalSearchParams } from "expo-router";
-import { StyleSheet, Button } from "react-native";
+import { StyleSheet, Button, Switch } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -14,6 +14,8 @@ import Slider from "@react-native-community/slider";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
+
+let barGraphMode = "stacked100";
 
 const SliderText = (props: SliderProps) => {
   const [value, setValue] = useState(0);
@@ -37,25 +39,48 @@ function removeString(array: any[], string: string) {
 }
 
 export default function AnalysisScreen() {
-  const [barGraphShow, barSetShouldShow] = useState(true);
-  const [lineGraphShow, lineSetShouldShow] = useState(false);
-  const [donutGraphShow, donutSetShouldShow] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => {
+    setIsEnabled((previousState) => !previousState);
+    if (barGraphMode === "stacked100") {
+      barGraphMode = "stacked";
+    } else {
+      barGraphMode = "stacked100";
+    }
+    console.log(barGraphMode);
+  };
 
-  function toggleGraph(visibleGraph) {
+  const [barGraphShow, barSetShouldShow] = useState(true);
+  const [barGraphShowButton, barSetShouldShowButton] = useState(false);
+  const [lineGraphShow, lineSetShouldShow] = useState(false);
+  const [lineGraphShowButton, lineSetShouldShowButton] = useState(true);
+  const [donutGraphShow, donutSetShouldShow] = useState(false);
+  const [donutGraphShowButton, donutSetShouldShowButton] = useState(true);
+
+  function toggleGraph(visibleGraph: string) {
     if (visibleGraph === "bar") {
       barSetShouldShow(true);
+      barSetShouldShowButton(false);
       lineSetShouldShow(false);
+      lineSetShouldShowButton(true);
       donutSetShouldShow(false);
+      donutSetShouldShowButton(true);
     }
     if (visibleGraph === "line") {
       barSetShouldShow(false);
+      barSetShouldShowButton(true);
       lineSetShouldShow(true);
+      lineSetShouldShowButton(false);
       donutSetShouldShow(false);
+      donutSetShouldShowButton(true);
     }
     if (visibleGraph === "donut") {
       barSetShouldShow(false);
+      barSetShouldShowButton(true);
       lineSetShouldShow(false);
+      lineSetShouldShowButton(true);
       donutSetShouldShow(true);
+      donutSetShouldShowButton(false);
     }
   }
 
@@ -221,11 +246,23 @@ export default function AnalysisScreen() {
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <ChartKitProvider mode="system" preset="acme" presets={{ acme }}>
+              <ThemedView style={styles.fixToText}>
+                <ThemedText themeColor="textSecondary">
+                  Change current graph mode
+                </ThemedText>
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+              </ThemedView>
               {barGraphShow ? (
                 <BarChart
                   data={barGraph}
                   xKey="month"
-                  mode="stacked100"
+                  mode={barGraphMode}
                   series={barYSeries}
                   orientation="horizontal"
                   scrollable
@@ -286,12 +323,21 @@ export default function AnalysisScreen() {
               ) : null}
             </ChartKitProvider>
             <ThemedView style={styles.fixToText}>
-              <Button title="Bar Graph" onPress={() => toggleGraph("bar")} />
-              <Button title="Line Graph" onPress={() => toggleGraph("line")} />
-              <Button
-                title="Donut Graph"
-                onPress={() => toggleGraph("donut")}
-              />
+              {barGraphShowButton ? (
+                <Button title="Bar Graph" onPress={() => toggleGraph("bar")} />
+              ) : null}
+              {lineGraphShowButton ? (
+                <Button
+                  title="Line Graph"
+                  onPress={() => toggleGraph("line")}
+                />
+              ) : null}
+              {donutGraphShowButton ? (
+                <Button
+                  title="Donut Graph"
+                  onPress={() => toggleGraph("donut")}
+                />
+              ) : null}
             </ThemedView>
             <ThemedText style={styles.centerText}>
               Current interest rate (%)
