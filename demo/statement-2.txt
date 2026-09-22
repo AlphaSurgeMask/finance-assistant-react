@@ -1,0 +1,93 @@
+SAMPLE BANK STATEMENT
+
+Account Holder: Taylor Brown
+Account Number: XXXX-XXXX
+Period: 01 Jan 2025 - 31 Mar 2025
+Starting Balance: $1,500.00
+
+DATE        DESCRIPTION                               DEBIT       CREDIT      BALANCE
+------------------------------------------------------------------------------------------------
+01-Jan      Opening Balance                                                  1,500.00
+02-Jan      Employer Payroll                                    1,600.00     3,100.00
+03-Jan      Rent Payment                           575.00                     2,525.00
+04-Jan      Uber Eats                              38.45                     2,486.55
+05-Jan      Amazon                               117.99                     2,368.56
+06-Jan      Spotify Premium                        11.99                     2,356.57
+06-Jan      Netflix                                18.99                     2,337.58
+07-Jan      BWS                                    42.60                     2,294.98
+08-Jan      Mobile Phone                           55.00                     2,239.98
+09-Jan      Steam Games                            59.99                     2,179.99
+10-Jan      Gym Membership                         19.99                     2,160.00
+11-Jan      Zara                                   96.00                     2,064.00
+12-Jan      Uber Eats                              31.20                     2,032.80
+13-Jan      Amazon                                74.95                     1,957.85
+14-Jan      Hoyts                                  28.00                     1,929.85
+15-Jan      Nike Online                           143.00                     1,786.85
+
+16-Jan      Employer Payroll                                    1,600.00     3,386.85
+
+17-Jan      Uber Eats                              44.80                     3,342.05
+18-Jan      Pub Payment                           102.35                     3,239.70
+19-Jan      Ampol Fuel                             61.00                     3,178.70
+20-Jan      Utilities                              42.00                     3,136.70
+21-Jan      JB HI-FI                              249.00                     2,887.70
+22-Jan      Steam Games                            44.95                     2,842.75
+24-Jan      Uber Eats                              39.10                     2,803.65
+26-Jan      Amazon                               186.42                     2,617.23
+28-Jan      Pub Payment                            87.50                     2,529.73
+31-Jan      Interest Credit                                      0.91        2,530.64
+31-Jan      Rent Payment                          575.00                     1,955.64
+
+30-Jan      Employer Payroll                                    1,600.00     3,555.64
+
+03-Feb      Uber Eats                              28.70                     3,526.94
+04-Feb      Amazon                               129.95                     3,396.99
+05-Feb      Spotify Premium                        11.99                     3,385.00
+06-Feb      Disney+                                13.99                     3,371.01
+07-Feb      BWS                                    55.80                     3,315.21
+08-Feb      Mobile Phone                           55.00                     3,260.21
+09-Feb      Uber                                  24.00                     3,236.21
+10-Feb      Gym Membership                         19.99                     3,216.22
+11-Feb      H&M                                   114.00                     3,102.22
+12-Feb      Guzman y Gomez                         22.50                     3,079.72
+
+13-Feb      Employer Payroll                                    1,600.00     4,679.72
+
+15-Feb      Amazon                               233.00                     4,446.72
+16-Feb      Event Cinemas                          24.00                     4,422.72
+17-Feb      Steam Games                            79.99                     4,342.73
+19-Feb      Uber Eats                              37.00                     4,305.73
+20-Feb      Electronics Store                     295.00                     4,010.73
+22-Feb      Pub Payment                           122.00                     3,888.73
+24-Feb      Uber Eats                              42.90                     3,845.83
+26-Feb      Amazon                                88.40                     3,757.43
+28-Feb      Rent Payment                          575.00                     3,182.43
+28-Feb      Interest Credit                                      0.83        3,183.26
+
+27-Feb      Employer Payroll                                    1,600.00     4,783.26
+
+03-Mar      Uber Eats                              36.95                     4,746.31
+04-Mar      Amazon                                95.00                     4,651.31
+05-Mar      Spotify Premium                        11.99                     4,639.32
+06-Mar      Netflix                                18.99                     4,620.33
+08-Mar      Mobile Phone                           55.00                     4,565.33
+09-Mar      Nike Online                           160.00                     4,405.33
+10-Mar      Gym Membership                         19.99                     4,385.34
+11-Mar      Steam Games                            49.99                     4,335.35
+12-Mar      Uber Eats                              29.80                     4,305.55
+
+13-Mar      Employer Payroll                                    1,600.00     5,905.55
+
+15-Mar      Pub Payment                           134.00                     5,771.55
+16-Mar      Amazon                               142.00                     5,629.55
+18-Mar      Uber                                  31.50                     5,598.05
+20-Mar      Uber Eats                              43.20                     5,554.85
+22-Mar      JB HI-FI                              198.00                     5,356.85
+25-Mar      Steam Games                            38.95                     5,317.90
+28-Mar      Rent Payment                          575.00                     4,742.90
+31-Mar      Interest Credit                                      0.75        4,743.65
+
+------------------------------------------------------------------------------------------------
+Total Income:            $9,602.49
+Total Expenses:         $10,050.10
+Savings Rate:               -4.7%
