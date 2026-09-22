@@ -40,7 +40,7 @@ export default function HomeScreen() {
           <ThemedView type="backgroundElement" style={styles.linkButton}>
             <Link
               href={{
-                pathname: "/analysis",
+                pathname: "./analysis",
                 params: { statement: statement },
               }}
             >
