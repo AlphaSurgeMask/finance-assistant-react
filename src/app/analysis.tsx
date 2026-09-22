@@ -60,7 +60,7 @@ export default function AnalysisScreen() {
   const [donutGraphShowButton, donutSetShouldShowButton] = useState(true);
 
   function toggleMode() {
-    if (calcMode == false) {
+    if (calcMode === false) {
       calcShouldShow(true);
       modeSetShouldShow(false);
       barSetShouldShow(false);
@@ -80,12 +80,16 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(true);
       donutSetShouldShow(false);
       donutSetShouldShowButton(true);
+
+      setIsEnabled(() => false);
     }
 
     calcMode = !calcMode;
   }
 
   function toggleGraph(visibleGraph: string) {
+    setIsEnabled(() => false);
+
     if (visibleGraph === "bar") {
       barSetShouldShow(true);
       barSetShouldShowButton(false);
