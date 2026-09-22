@@ -47,9 +47,11 @@ export default function AnalysisScreen() {
     } else {
       barGraphMode = "stacked100";
     }
-    console.log(barGraphMode);
   };
 
+  const [showButtonShow, showButtonSetShouldShow] = useState(false);
+  const [graphModeShow, modeSetShouldShow] = useState(true);
+  const [hideButtonShow, hideButtonSetShouldShow] = useState(true);
   const [barGraphShow, barSetShouldShow] = useState(true);
   const [barGraphShowButton, barSetShouldShowButton] = useState(false);
   const [lineGraphShow, lineSetShouldShow] = useState(false);
@@ -81,6 +83,28 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(true);
       donutSetShouldShow(true);
       donutSetShouldShowButton(false);
+    }
+    if (visibleGraph === "none") {
+      showButtonSetShouldShow(true);
+      modeSetShouldShow(false);
+      hideButtonSetShouldShow(false);
+      barSetShouldShow(false);
+      barSetShouldShowButton(false);
+      lineSetShouldShow(false);
+      lineSetShouldShowButton(false);
+      donutSetShouldShow(false);
+      donutSetShouldShowButton(false);
+    }
+    if (visibleGraph === "default") {
+      showButtonSetShouldShow(false);
+      modeSetShouldShow(true);
+      hideButtonSetShouldShow(true);
+      barSetShouldShow(true);
+      barSetShouldShowButton(false);
+      lineSetShouldShow(false);
+      lineSetShouldShowButton(true);
+      donutSetShouldShow(false);
+      donutSetShouldShowButton(true);
     }
   }
 
@@ -246,18 +270,20 @@ export default function AnalysisScreen() {
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <ChartKitProvider mode="system" preset="acme" presets={{ acme }}>
-              <ThemedView style={styles.fixToText}>
-                <ThemedText themeColor="textSecondary">
-                  Change current graph mode
-                </ThemedText>
-                <Switch
-                  trackColor={{ false: "#767577", true: "#81b0ff" }}
-                  thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                  ios_backgroundColor="#3e3e3e"
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                />
-              </ThemedView>
+              {graphModeShow ? (
+                <ThemedView style={styles.fixToText}>
+                  <ThemedText themeColor="textSecondary">
+                    Change current graph mode
+                  </ThemedText>
+                  <Switch
+                    trackColor={{ false: "#767577", true: "#81b0ff" }}
+                    thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+                  />
+                </ThemedView>
+              ) : null}
               {barGraphShow ? (
                 <BarChart
                   data={barGraph}
@@ -336,6 +362,15 @@ export default function AnalysisScreen() {
                 <Button
                   title="Donut Graph"
                   onPress={() => toggleGraph("donut")}
+                />
+              ) : null}
+              {hideButtonShow ? (
+                <Button title="Hide all" onPress={() => toggleGraph("none")} />
+              ) : null}
+              {showButtonShow ? (
+                <Button
+                  title="Show default"
+                  onPress={() => toggleGraph("default")}
                 />
               ) : null}
             </ThemedView>
