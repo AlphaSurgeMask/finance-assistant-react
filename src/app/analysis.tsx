@@ -16,6 +16,7 @@ import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 
 let barGraphMode = "stacked100";
+let calcMode = false;
 
 const SliderText = (props: SliderProps) => {
   const [value, setValue] = useState(0);
@@ -49,15 +50,40 @@ export default function AnalysisScreen() {
     }
   };
 
-  const [showButtonShow, showButtonSetShouldShow] = useState(false);
+  const [calcShow, calcShouldShow] = useState(false);
   const [graphModeShow, modeSetShouldShow] = useState(true);
-  const [hideButtonShow, hideButtonSetShouldShow] = useState(true);
   const [barGraphShow, barSetShouldShow] = useState(true);
   const [barGraphShowButton, barSetShouldShowButton] = useState(false);
   const [lineGraphShow, lineSetShouldShow] = useState(false);
   const [lineGraphShowButton, lineSetShouldShowButton] = useState(true);
   const [donutGraphShow, donutSetShouldShow] = useState(false);
   const [donutGraphShowButton, donutSetShouldShowButton] = useState(true);
+
+  function toggleMode() {
+    if (calcMode == false) {
+      calcShouldShow(true);
+      modeSetShouldShow(false);
+      barSetShouldShow(false);
+      barSetShouldShowButton(false);
+      lineSetShouldShow(false);
+      lineSetShouldShowButton(false);
+      donutSetShouldShow(false);
+      donutSetShouldShowButton(false);
+    }
+
+    if (calcMode === true) {
+      calcShouldShow(false);
+      modeSetShouldShow(true);
+      barSetShouldShow(true);
+      barSetShouldShowButton(false);
+      lineSetShouldShow(false);
+      lineSetShouldShowButton(true);
+      donutSetShouldShow(false);
+      donutSetShouldShowButton(true);
+    }
+
+    calcMode = !calcMode;
+  }
 
   function toggleGraph(visibleGraph: string) {
     if (visibleGraph === "bar") {
@@ -83,28 +109,6 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(true);
       donutSetShouldShow(true);
       donutSetShouldShowButton(false);
-    }
-    if (visibleGraph === "none") {
-      showButtonSetShouldShow(true);
-      modeSetShouldShow(false);
-      hideButtonSetShouldShow(false);
-      barSetShouldShow(false);
-      barSetShouldShowButton(false);
-      lineSetShouldShow(false);
-      lineSetShouldShowButton(false);
-      donutSetShouldShow(false);
-      donutSetShouldShowButton(false);
-    }
-    if (visibleGraph === "default") {
-      showButtonSetShouldShow(false);
-      modeSetShouldShow(true);
-      hideButtonSetShouldShow(true);
-      barSetShouldShow(true);
-      barSetShouldShowButton(false);
-      lineSetShouldShow(false);
-      lineSetShouldShowButton(true);
-      donutSetShouldShow(false);
-      donutSetShouldShowButton(true);
     }
   }
 
@@ -270,20 +274,23 @@ export default function AnalysisScreen() {
           </ThemedText>
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             <ChartKitProvider mode="system" preset="acme" presets={{ acme }}>
-              {graphModeShow ? (
-                <ThemedView style={styles.fixToText}>
-                  <ThemedText themeColor="textSecondary">
-                    Change current graph mode
-                  </ThemedText>
-                  <Switch
-                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isEnabled}
-                  />
-                </ThemedView>
-              ) : null}
+              <ThemedView style={styles.fixToText}>
+                {graphModeShow ? (
+                  <ThemedView>
+                    <ThemedText themeColor="textSecondary">
+                      Graph Mode
+                    </ThemedText>
+                    <Switch
+                      trackColor={{ false: "#767577", true: "#81b0ff" }}
+                      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleSwitch}
+                      value={isEnabled}
+                    />
+                  </ThemedView>
+                ) : null}
+                <Button title="Change Calc Mode" onPress={() => toggleMode()} />
+              </ThemedView>
               {barGraphShow ? (
                 <BarChart
                   data={barGraph}
@@ -364,50 +371,45 @@ export default function AnalysisScreen() {
                   onPress={() => toggleGraph("donut")}
                 />
               ) : null}
-              {hideButtonShow ? (
-                <Button title="Hide all" onPress={() => toggleGraph("none")} />
-              ) : null}
-              {showButtonShow ? (
-                <Button
-                  title="Show default"
-                  onPress={() => toggleGraph("default")}
-                />
-              ) : null}
             </ThemedView>
-            <ThemedText style={styles.centerText}>
-              Current interest rate (%)
-            </ThemedText>
-            <ThemedView style={{ borderRadius: Spacing.four }}>
-              <SliderText
-                style={styles.userSlider}
-                minimumValue={-1}
-                maximumValue={7}
-                step={0.1}
-                value={0.4}
-                lowerLimit={0}
-                upperLimit={6}
-                thumbTintColor="#2196F3"
-                minimumTrackTintColor="#000000"
-                maximumTrackTintColor="#FFFFFF"
-                thumbSize={32}
-              />
-            </ThemedView>
-            <ThemedText style={styles.centerText}>
-              Possible savings ($)
-            </ThemedText>
-            <ThemedView style={{ borderRadius: Spacing.four }}>
-              <SliderText
-                style={styles.userSlider}
-                minimumValue={0}
-                maximumValue={totalCost}
-                step={1}
-                value={0.4}
-                minimumTrackTintColor="#000000"
-                maximumTrackTintColor="#FFFFFF"
-                thumbTintColor="#2196F3"
-                thumbSize={32}
-              />
-            </ThemedView>
+            {calcShow ? (
+              <ThemedView type="backgroundElement" style={styles.stepContainer}>
+                <ThemedText style={styles.centerText}>
+                  Current interest rate (%)
+                </ThemedText>
+                <ThemedView style={{ borderRadius: Spacing.four }}>
+                  <SliderText
+                    style={styles.userSlider}
+                    minimumValue={-1}
+                    maximumValue={7}
+                    step={0.1}
+                    value={0.4}
+                    lowerLimit={0}
+                    upperLimit={6}
+                    thumbTintColor="#2196F3"
+                    minimumTrackTintColor="#000000"
+                    maximumTrackTintColor="#FFFFFF"
+                    thumbSize={32}
+                  />
+                </ThemedView>
+                <ThemedText style={styles.centerText}>
+                  Possible savings ($)
+                </ThemedText>
+                <ThemedView style={{ borderRadius: Spacing.four }}>
+                  <SliderText
+                    style={styles.userSlider}
+                    minimumValue={0}
+                    maximumValue={totalCost}
+                    step={1}
+                    value={0.4}
+                    minimumTrackTintColor="#000000"
+                    maximumTrackTintColor="#FFFFFF"
+                    thumbTintColor="#2196F3"
+                    thumbSize={32}
+                  />
+                </ThemedView>
+              </ThemedView>
+            ) : null}
           </ThemedView>
         </ThemedView>
       </SafeAreaView>
