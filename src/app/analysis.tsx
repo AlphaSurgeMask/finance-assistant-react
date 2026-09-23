@@ -11,6 +11,7 @@ import {
   createChartPreset,
 } from "react-native-chart-kit/v2";
 import Slider, { SliderProps } from "@react-native-community/slider";
+
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
@@ -525,4 +526,3 @@ const styles = StyleSheet.create({
 function setInterestRate(value: number) {
   throw new Error("Function not implemented.");
 }
-
