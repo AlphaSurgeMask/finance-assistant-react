@@ -384,12 +384,10 @@ export default function AnalysisScreen() {
                 <ThemedView style={{ borderRadius: Spacing.four }}>
                   <SliderText
                     style={styles.userSlider}
-                    minimumValue={-1}
-                    maximumValue={7}
+                    minimumValue={0}
+                    maximumValue={6}
                     step={0.1}
                     value={0.4}
-                    lowerLimit={0}
-                    upperLimit={6}
                     thumbTintColor="#2196F3"
                     minimumTrackTintColor="#000000"
                     maximumTrackTintColor="#FFFFFF"
@@ -406,6 +404,22 @@ export default function AnalysisScreen() {
                     maximumValue={totalCost}
                     step={1}
                     value={0.4}
+                    minimumTrackTintColor="#000000"
+                    maximumTrackTintColor="#FFFFFF"
+                    thumbTintColor="#2196F3"
+                    thumbSize={32}
+                  />
+                </ThemedView>
+                <ThemedText style={styles.centerText}>
+                  Months of saving
+                </ThemedText>
+                <ThemedView style={{ borderRadius: Spacing.four }}>
+                  <SliderText
+                    style={styles.userSlider}
+                    minimumValue={1}
+                    maximumValue={months.length}
+                    step={1}
+                    value={1}
                     minimumTrackTintColor="#000000"
                     maximumTrackTintColor="#FFFFFF"
                     thumbTintColor="#2196F3"
