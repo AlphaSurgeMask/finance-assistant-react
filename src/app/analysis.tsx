@@ -10,7 +10,7 @@ import {
   DonutChart,
   createChartPreset,
 } from "react-native-chart-kit/v2";
-import Slider from "@react-native-community/slider";
+import Slider, { SliderProps } from "@react-native-community/slider";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
@@ -18,8 +18,39 @@ import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 let barGraphMode = "stacked100";
 let calcMode = false;
 
-const SliderText = (props: SliderProps) => {
+let interestRate = 0;
+let possibleSavings = 0;
+let savingMonths = 0;
+
+const SliderTextInterest = (props: SliderProps) => {
   const [value, setValue] = useState(0);
+  interestRate = value;
+  return (
+    <ThemedView style={{ borderRadius: Spacing.four }}>
+      <ThemedText style={styles.centerText}>
+        {value && +value.toFixed(2)}
+      </ThemedText>
+      <Slider {...props} onValueChange={setValue} />
+    </ThemedView>
+  );
+};
+
+const SliderTextSavings = (props: SliderProps) => {
+  const [value, setValue] = useState(0);
+  possibleSavings = value;
+  return (
+    <ThemedView style={{ borderRadius: Spacing.four }}>
+      <ThemedText style={styles.centerText}>
+        {value && +value.toFixed(2)}
+      </ThemedText>
+      <Slider {...props} onValueChange={setValue} />
+    </ThemedView>
+  );
+};
+
+const SliderTextMonths = (props: SliderProps) => {
+  const [value, setValue] = useState(0);
+  savingMonths = value;
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
       <ThemedText style={styles.centerText}>
@@ -382,7 +413,7 @@ export default function AnalysisScreen() {
                   Current interest rate (%)
                 </ThemedText>
                 <ThemedView style={{ borderRadius: Spacing.four }}>
-                  <SliderText
+                  <SliderTextInterest
                     style={styles.userSlider}
                     minimumValue={0}
                     maximumValue={6}
@@ -398,7 +429,7 @@ export default function AnalysisScreen() {
                   Possible savings ($)
                 </ThemedText>
                 <ThemedView style={{ borderRadius: Spacing.four }}>
-                  <SliderText
+                  <SliderTextSavings
                     style={styles.userSlider}
                     minimumValue={0}
                     maximumValue={totalCost}
@@ -414,7 +445,7 @@ export default function AnalysisScreen() {
                   Months of saving
                 </ThemedText>
                 <ThemedView style={{ borderRadius: Spacing.four }}>
-                  <SliderText
+                  <SliderTextMonths
                     style={styles.userSlider}
                     minimumValue={1}
                     maximumValue={months.length}
@@ -426,6 +457,10 @@ export default function AnalysisScreen() {
                     thumbSize={32}
                   />
                 </ThemedView>
+                <ThemedText style={styles.centerText}>
+                  You could have saved $
+                  {(possibleSavings * (1 + interestRate / 12)) ^ savingMonths}
+                </ThemedText>
               </ThemedView>
             ) : null}
           </ThemedView>
