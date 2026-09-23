@@ -18,13 +18,9 @@ import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 let barGraphMode = "stacked100";
 let calcMode = false;
 
-let interestRate = 0;
-let possibleSavings = 0;
-let savingMonths = 0;
-
 const SliderTextInterest = (props: SliderProps) => {
   const [value, setValue] = useState(0);
-  interestRate = value;
+  setInterestRate(value);
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
       <ThemedText style={styles.centerText}>
@@ -37,7 +33,7 @@ const SliderTextInterest = (props: SliderProps) => {
 
 const SliderTextSavings = (props: SliderProps) => {
   const [value, setValue] = useState(0);
-  possibleSavings = value;
+  setPossibleSavings(value);
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
       <ThemedText style={styles.centerText}>
@@ -50,7 +46,7 @@ const SliderTextSavings = (props: SliderProps) => {
 
 const SliderTextMonths = (props: SliderProps) => {
   const [value, setValue] = useState(0);
-  savingMonths = value;
+  setSavingMonths(value);
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
       <ThemedText style={styles.centerText}>
@@ -80,6 +76,10 @@ export default function AnalysisScreen() {
       barGraphMode = "stacked100";
     }
   };
+
+  const [interestRate, setInterestRate] = useState(0);
+  const [possibleSavings, setPossibleSavings] = useState(0);
+  const [savingMonths, setSavingMonths] = useState(0);
 
   const [calcShow, calcShouldShow] = useState(false);
   const [graphModeShow, modeSetShouldShow] = useState(true);
@@ -522,3 +522,7 @@ const styles = StyleSheet.create({
     borderRadius: Spacing.four,
   },
 });
+function setInterestRate(value: number) {
+  throw new Error("Function not implemented.");
+}
+
