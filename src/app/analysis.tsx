@@ -146,6 +146,7 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(true);
       donutSetShouldShow(false);
       donutSetShouldShowButton(true);
+      modeSetShouldShow(true);
     }
     if (visibleGraph === "line") {
       barSetShouldShow(false);
@@ -154,6 +155,7 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(false);
       donutSetShouldShow(false);
       donutSetShouldShowButton(true);
+      modeSetShouldShow(false);
     }
     if (visibleGraph === "donut") {
       barSetShouldShow(false);
@@ -162,6 +164,7 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(true);
       donutSetShouldShow(true);
       donutSetShouldShowButton(false);
+      modeSetShouldShow(false);
     }
   }
 
@@ -344,7 +347,10 @@ export default function AnalysisScreen() {
                     />
                   </ThemedView>
                 ) : null}
-                <Button title="Change Calc Mode" onPress={() => toggleMode()} />
+                <Button
+                  title="Change Analysis Mode"
+                  onPress={() => toggleMode()}
+                />
               </ThemedView>
               {barGraphShow ? (
                 <BarChart
