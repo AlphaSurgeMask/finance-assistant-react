@@ -65,9 +65,10 @@ function removeString(array: any[], string: string) {
 }
 
 export default function AnalysisScreen() {
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [switchState, setSwitchState] = useState(false);
+
   const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
+    setSwitchState((previousState) => !previousState);
     if (barGraphMode === "stacked100") {
       barGraphMode = "stacked";
     } else {
@@ -106,6 +107,9 @@ export default function AnalysisScreen() {
   }
 
   function toggleMode() {
+    setSwitchState(() => false);
+    barGraphMode = "stacked100";
+
     if (calcMode === false) {
       calcShouldShow(true);
       modeSetShouldShow(false);
@@ -126,15 +130,14 @@ export default function AnalysisScreen() {
       lineSetShouldShowButton(true);
       donutSetShouldShow(false);
       donutSetShouldShowButton(true);
-
-      setIsEnabled(() => false);
     }
 
     calcMode = !calcMode;
   }
 
   function toggleGraph(visibleGraph: string) {
-    setIsEnabled(() => false);
+    setSwitchState(() => false);
+    barGraphMode = "stacked100";
 
     if (visibleGraph === "bar") {
       barSetShouldShow(true);
@@ -334,10 +337,10 @@ export default function AnalysisScreen() {
                     </ThemedText>
                     <Switch
                       trackColor={{ false: "#767577", true: "#81b0ff" }}
-                      thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+                      thumbColor={switchState ? "#f5dd4b" : "#f4f3f4"}
                       ios_backgroundColor="#3e3e3e"
                       onValueChange={toggleSwitch}
-                      value={isEnabled}
+                      value={switchState}
                     />
                   </ThemedView>
                 ) : null}
