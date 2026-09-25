@@ -21,10 +21,9 @@ let calcMode = false;
 
 const SliderTextInterest = (props: SliderProps) => {
   const [value, setValue] = useState(0);
-  setInterestRate(value);
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
-      <ThemedText style={styles.centerText}>
+      <ThemedText style={styles.centerText} id="interestRate">
         {value && +value.toFixed(2)}
       </ThemedText>
       <Slider {...props} onValueChange={setValue} />
@@ -34,10 +33,9 @@ const SliderTextInterest = (props: SliderProps) => {
 
 const SliderTextSavings = (props: SliderProps) => {
   const [value, setValue] = useState(0);
-  setPossibleSavings(value);
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
-      <ThemedText style={styles.centerText}>
+      <ThemedText style={styles.centerText} id="possibleSavings">
         {value && +value.toFixed(2)}
       </ThemedText>
       <Slider {...props} onValueChange={setValue} />
@@ -47,10 +45,9 @@ const SliderTextSavings = (props: SliderProps) => {
 
 const SliderTextMonths = (props: SliderProps) => {
   const [value, setValue] = useState(0);
-  setSavingMonths(value);
   return (
     <ThemedView style={{ borderRadius: Spacing.four }}>
-      <ThemedText style={styles.centerText}>
+      <ThemedText style={styles.centerText} id="savingMonths">
         {value && +value.toFixed(2)}
       </ThemedText>
       <Slider {...props} onValueChange={setValue} />
@@ -78,10 +75,6 @@ export default function AnalysisScreen() {
     }
   };
 
-  const [interestRate, setInterestRate] = useState(0);
-  const [possibleSavings, setPossibleSavings] = useState(0);
-  const [savingMonths, setSavingMonths] = useState(0);
-
   const [calcShow, calcShouldShow] = useState(false);
   const [graphModeShow, modeSetShouldShow] = useState(true);
   const [barGraphShow, barSetShouldShow] = useState(true);
@@ -90,6 +83,27 @@ export default function AnalysisScreen() {
   const [lineGraphShowButton, lineSetShouldShowButton] = useState(true);
   const [donutGraphShow, donutSetShouldShow] = useState(false);
   const [donutGraphShowButton, donutSetShouldShowButton] = useState(true);
+
+  const [savingsCalculatedState, savingsCalculatedSetState] = useState(
+    "Hit calculate to get started!",
+  );
+
+  function calcCompoundInterest() {
+    const possibleSavings = Number(
+      document.getElementById("possibleSavings")?.innerHTML,
+    );
+    const interestRate = Number(
+      document.getElementById("interestRate")?.innerHTML,
+    );
+    const savingMonths = Number(
+      document.getElementById("savingMonths")?.innerHTML,
+    );
+
+    savingsCalculatedSetState(
+      "You could have saved $" +
+        String((possibleSavings * (1 + interestRate / 12)) ^ savingMonths),
+    );
+  }
 
   function toggleMode() {
     if (calcMode === false) {
@@ -292,8 +306,10 @@ export default function AnalysisScreen() {
 
   for (let i = 0; i < costs.length; i++) {
     let barYSeriesRow: any = {};
+
     barYSeriesRow["yKey"] = costs[i];
     barYSeriesRow["label"] = costs[i];
+
     barYSeries.push(barYSeriesRow);
   }
 
@@ -456,11 +472,15 @@ export default function AnalysisScreen() {
                     maximumTrackTintColor="#FFFFFF"
                     thumbTintColor="#2196F3"
                     thumbSize={32}
+                    id="test"
                   />
                 </ThemedView>
+                <Button
+                  title="Calculate"
+                  onPress={() => calcCompoundInterest()}
+                />
                 <ThemedText style={styles.centerText}>
-                  You could have saved $
-                  {(possibleSavings * (1 + interestRate / 12)) ^ savingMonths}
+                  {savingsCalculatedState}
                 </ThemedText>
               </ThemedView>
             ) : null}
@@ -523,6 +543,3 @@ const styles = StyleSheet.create({
     borderRadius: Spacing.four,
   },
 });
-function setInterestRate(value: number) {
-  throw new Error("Function not implemented.");
-}
